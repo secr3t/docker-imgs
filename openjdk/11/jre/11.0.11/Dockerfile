@@ -23,7 +23,7 @@ ENV JAVA_FILE jre-${JAVA_VERSION}.tar.gz
 ENV JAVA_HOME /usr/local/${JAVA_DIR}
 
 ENV DOWNLOAD_URL https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.11%2B9_openj9-0.26.0/OpenJDK11U-jre_x64_linux_openj9_11.0.11_9_openj9-0.26.0.tar.gz
-ENV UNARCHIVE_DIR_NAME jdk-11.0.11+j9
+ENV UNARCHIVE_DIR_NAME jdk-11.0.11+9-jre
 
 # JAVA 설치
 RUN cd /usr/local/src && \
