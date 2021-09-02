@@ -1,11 +1,10 @@
-FROM rockylinux/rockylinux:8.4
+FROM centos:7
 
 MAINTAINER secr3t <dev.secr3@gmail.com>
 
 # Install Packages
 RUN yum update -y && \
     yum install -y wget && \
-    yum -y install glibc-locale-source glibc-langpack-en && \
     yum clean all
 
 # 언어 설정
