@@ -25,7 +25,7 @@ ENV JAVA_HOME /usr/local/${JAVA_DIR}
 
 
 ENV DOWNLOAD_URL https://corretto.aws/downloads/resources/${JAVA_VERSION}/amazon-corretto-${JAVA_VERSION}-linux-x64.tar.gz
-ENV UNARCHIVE_DIR_NAME jdk-17.0.9.8.1
+ENV UNARCHIVE_DIR_NAME amazon-corretto-${JAVA_VERSION}-linux-x64
 
 # JAVA 설치
 RUN cd /usr/local/src && \
