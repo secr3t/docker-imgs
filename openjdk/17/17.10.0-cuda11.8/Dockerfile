@@ -1,12 +1,10 @@
-FROM rockylinux/rockylinux:9
-
-MAINTAINER secr3t <dev.secr3@gmail.com>
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-rockylinux8
 
 # Install Packages
-RUN yum update -y && \
-    yum install -y wget && \
-    yum -y install glibc-locale-source glibc-langpack-en && \
-    yum clean all
+RUN dnf -y update && \
+    dnf -y install wget && \
+    dnf -y install glibc-locale-source glibc-langpack-en && \
+    dnf clean all
 
 # 언어 설정
 RUN localedef -f UTF-8 -i ko_KR ko_KR.UTF-8
@@ -18,7 +16,7 @@ ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo ${TZ} > /etc/timezone
 
-ENV JAVA_VERSION 17.0.9.8.1
+ENV JAVA_VERSION 17.0.10.8.1
 ENV JAVA_DIR jdk-${JAVA_VERSION}
 ENV JAVA_FILE jdk-${JAVA_VERSION}.tar.gz
 ENV JAVA_HOME /usr/local/${JAVA_DIR}
@@ -37,3 +35,17 @@ RUN cd /usr/local/src && \
 
 # JAVA_HOME PATH 등록
 ENV PATH="$PATH:$JAVA_HOME/bin"
+
+#ENV ARCH="x86_64"
+#ENV DISTRO="rhel8"
+#ENV REPO_URL https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/cuda-${DISTRO}.repo
+#RUN dnf config-manager --add-repo ${REPO_URL}
+
+RUN dnf install dnf-plugins-core -y
+
+RUN mkdir tmp-content && \
+    dnf download libcublas-12-0 && \
+    rpm2cpio libcublas-12-0* | cpio -idmv --directory=tmp-content
+
+RUN mv /tmp-content/usr/local/cuda-12.0/targets/*-linux/lib/* /usr/local/cuda/lib64/ && \
+    rm -rf /tmp-content
